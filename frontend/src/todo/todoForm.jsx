@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 
-import { changeDescription, search } from './todoActions'
+import { add, changeDescription, search } from './todoActions'
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 
@@ -15,20 +15,22 @@ class TodoForm extends Component {
   componentWillMount() {
     this.props.search()
   }
-  
+
   render() {
+    const { add, search, description } = this.props
     return (
       <div role='form' className='todoForm'>
         <Grid cols='12 9 10'>
           <input id='description' className='form-control'
             placeholder='Add a task'
-            onChange={this.props.changeDescription}></input> 
+            onChange={this.props.changeDescription}
+            value={this.props.description}></input> 
         </Grid>
         <Grid cols='12 3 2'>
           <IconButton style='primary' icon='plus'
-            onClick={this.props.handleAdd}></IconButton>
+            onClick={() => add(description)}></IconButton>
           <IconButton style='info' icon='search'
-            onClick={this.props.handleSearch}></IconButton>
+            onClick={() => search()}></IconButton>
           <IconButton style='default' icon='close'
             onClick={this.props.handleClear}></IconButton>
         </Grid>
@@ -39,5 +41,5 @@ class TodoForm extends Component {
 
 const mapStateToProps = state => ({description: state.todo.description})
 const mapDispatchToProps = dispatch => 
-  bindActionCreators({ changeDescription, search}, dispatch)
+  bindActionCreators({ add, changeDescription, search}, dispatch)
 export default connect (mapStateToProps, mapDispatchToProps)(TodoForm)

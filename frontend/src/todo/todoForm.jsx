@@ -1,14 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
 
-export default props => (
+const TodoForm = props => (
   <div role='form' className='todoForm'>
     <Grid cols='12 9 10'>
       <input id='description' className='form-control'
         placeholder='Add a task'
-        onChange={props.handleChange}
-        value={props.description}></input> 
+        onChange={props.handleChange}></input> 
     </Grid>
     <Grid cols='12 3 2'>
       <IconButton style='primary' icon='plus'
@@ -20,3 +21,6 @@ export default props => (
     </Grid>
   </div>
 )
+
+const mapStateToProps = state => ({description: state.todo.description})
+export default connect (mapStateToProps)(TodoForm)
